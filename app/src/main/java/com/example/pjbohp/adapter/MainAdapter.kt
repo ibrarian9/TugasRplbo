@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pjbohp.DetailActivity
-import com.example.pjbohp.models.HapeItem
 import com.example.pjbohp.R
 import com.example.pjbohp.models.ResponseItem
 
