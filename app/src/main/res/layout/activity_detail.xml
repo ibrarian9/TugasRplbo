@@ -152,6 +152,7 @@
                 android:background="@drawable/bg_green"
                 android:gravity="bottom"
                 android:paddingStart="10dp"
+                android:paddingLeft="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

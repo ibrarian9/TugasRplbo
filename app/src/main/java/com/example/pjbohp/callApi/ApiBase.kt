@@ -10,7 +10,7 @@ class ApiBase {
 
     private fun getRetrofit() : Retrofit {
 
-        val url = "192.168.1.9:8080"
+        val url = "192.168.1.10:8080"
         val urlBase = "http://$url/api/hape/"
 
         return Retrofit.Builder()

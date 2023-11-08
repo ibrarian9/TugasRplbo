@@ -13,7 +13,7 @@ import com.example.pjbohp.models.HapeItem
 import com.example.pjbohp.R
 import com.example.pjbohp.models.ResponseItem
 
-class MainAdapter (private val data: MutableList<ResponseItem>): RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
+class MainAdapter (private var data: MutableList<ResponseItem>): RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val v: View = LayoutInflater.from(parent.context).inflate(R.layout.item_list, parent, false)
@@ -43,6 +43,11 @@ class MainAdapter (private val data: MutableList<ResponseItem>): RecyclerView.Ad
             addAll(dataa)
             notifyDataSetChanged()
         }
+    }
+
+    fun filterList(filteList: MutableList<ResponseItem>) {
+        this.data = filteList
+        notifyDataSetChanged()
     }
 
     class MyViewHolder(v: View): RecyclerView.ViewHolder(v) {
