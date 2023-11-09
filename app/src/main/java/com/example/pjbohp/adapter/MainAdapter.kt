@@ -10,10 +10,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pjbohp.DetailActivity
 import com.example.pjbohp.R
+import com.example.pjbohp.callApi.ApiBase
 import com.example.pjbohp.models.ResponseItem
+import com.squareup.picasso.Picasso
 
 class MainAdapter (private var data: MutableList<ResponseItem>): RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
 
+    private val urlBase = ApiBase().urlBase + "poto/"
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val v: View = LayoutInflater.from(parent.context).inflate(R.layout.item_list, parent, false)
         return MyViewHolder(v)
@@ -26,11 +29,12 @@ class MainAdapter (private var data: MutableList<ResponseItem>): RecyclerView.Ad
 
         holder.tvNama.text = listData.nama
         holder.tvHarga.text = listData.harga
+        Picasso.get().load(urlBase + listData.id).into(holder.image)
         holder.itemView.setOnClickListener{ v ->
             val intent = Intent(v.context, DetailActivity::class.java)
             intent.putExtra("nama", listData.nama)
             intent.putExtra("harga", listData.harga)
-            intent.putExtra("foto", listData.foto)
+            intent.putExtra("id", listData.id)
             v.context.startActivity(intent)
         }
     }
@@ -44,6 +48,7 @@ class MainAdapter (private var data: MutableList<ResponseItem>): RecyclerView.Ad
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun filterList(filteList: MutableList<ResponseItem>) {
         this.data = filteList
         notifyDataSetChanged()

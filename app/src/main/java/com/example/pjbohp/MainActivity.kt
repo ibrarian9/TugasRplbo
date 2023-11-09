@@ -4,19 +4,23 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.pjbohp.adapter.MainAdapter
 import com.example.pjbohp.callApi.ApiBase
 import com.example.pjbohp.models.ResponseItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Collections
 import java.util.Locale
+import java.util.Random
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +29,10 @@ class MainActivity : AppCompatActivity() {
     private var lm: RecyclerView.LayoutManager? = null
     var data: MutableList<ResponseItem> = ArrayList()
     private lateinit var dataKosong: TextView
+    private lateinit var stateKosong: ImageView
+    private lateinit var refresh: SwipeRefreshLayout
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
           Thread.sleep(1000)
@@ -34,8 +41,11 @@ class MainActivity : AppCompatActivity() {
 
         val pbar: ProgressBar = findViewById(R.id.pBar)
 
+
         //  text for data kosong
         dataKosong = findViewById(R.id.dataKosong)
+        stateKosong = findViewById(R.id.nothingState)
+        refresh = findViewById(R.id.refresh)
 
         //  Fitur Cari
         val cari: SearchView = findViewById(R.id.search)
@@ -73,12 +83,17 @@ class MainActivity : AppCompatActivity() {
             }
             @SuppressLint("SetTextI18n")
             override fun onFailure(call: Call<MutableList<ResponseItem>>, t: Throwable) {
-                dataKosong.visibility = View.VISIBLE
-                dataKosong.text = "Data Tidak Termuat"
+                stateKosong.visibility = View.VISIBLE
                 //  Menghilangkan Loading
                 pbar.visibility = View.GONE
             }
         })
+
+        refresh.setOnRefreshListener {
+            refresh.isRefreshing = false
+            data.shuffle(Random(System.currentTimeMillis()))
+            mainAdapter.notifyDataSetChanged()
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
@@ -93,11 +108,10 @@ class MainActivity : AppCompatActivity() {
             //  Jika data tidak ada
             if (filteredList.isEmpty()){
                 rv.visibility = View.GONE
-                dataKosong.visibility = View.VISIBLE
-                dataKosong.text = "Data Tidak Ada"
+                stateKosong.visibility = View.VISIBLE
             } else {
                 rv.visibility = View.VISIBLE
-                dataKosong.visibility = View.GONE
+                stateKosong.visibility = View.GONE
                 mainAdapter.filterList(filteredList)
             }
         }
