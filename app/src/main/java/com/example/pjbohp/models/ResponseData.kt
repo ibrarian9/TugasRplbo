@@ -16,15 +16,19 @@ data class ResponseItem (
 	@field:SerializedName("harga")
 	val harga: String? = null,
 
+	@field:SerializedName("deskripsi")
+	val desc: String? = null,
+
 	@field:SerializedName("kondisi")
 	val kondisi: String? = null,
 
 	@field:SerializedName("foto")
 	val foto: String? = null,
 
-	@field:SerializedName("photosImagePath")
-	val photosImagePath: String? = null,
+	@field:SerializedName("imagePath")
+	val imagePath: String? = null,
 
 	@field:SerializedName("id")
 	val id: Int? = null
+
 ) : Parcelable

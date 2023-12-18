@@ -18,7 +18,6 @@ import com.example.pjbohp.models.ResponseItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.Collections
 import java.util.Locale
 import java.util.Random
 
@@ -29,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private var lm: RecyclerView.LayoutManager? = null
     var data: MutableList<ResponseItem> = ArrayList()
     private lateinit var dataKosong: TextView
+    private lateinit var dataSearch: TextView
     private lateinit var stateKosong: ImageView
     private lateinit var refresh: SwipeRefreshLayout
 
@@ -41,9 +41,9 @@ class MainActivity : AppCompatActivity() {
 
         val pbar: ProgressBar = findViewById(R.id.pBar)
 
-
         //  text for data kosong
         dataKosong = findViewById(R.id.dataKosong)
+        dataSearch = findViewById(R.id.tvHp)
         stateKosong = findViewById(R.id.nothingState)
         refresh = findViewById(R.id.refresh)
 
@@ -98,10 +98,11 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged", "SetTextI18n")
     private fun filterList(query: String?) {
-        if (query != null) {
-            val filteredList: ArrayList<ResponseItem> = ArrayList()
+        val filteredList: ArrayList<ResponseItem> = ArrayList()
+        if (query != null && query != "") {
+            dataSearch.text = "Menampilkan hasil untuk '$query' "
             for (i in data){
-                if (i.nama?.lowercase(Locale.ROOT)?.contains(query) == true){
+                if (i.nama?.lowercase(Locale.ROOT)?.contains(query) == true) {
                     filteredList.add(i)
                 }
             }
@@ -114,6 +115,11 @@ class MainActivity : AppCompatActivity() {
                 stateKosong.visibility = View.GONE
                 mainAdapter.filterList(filteredList)
             }
+        } else {
+            dataSearch.text = "Daftar Handphone"
+            rv.visibility = View.VISIBLE
+            stateKosong.visibility = View.GONE
+            mainAdapter.setData(data)
         }
     }
 }

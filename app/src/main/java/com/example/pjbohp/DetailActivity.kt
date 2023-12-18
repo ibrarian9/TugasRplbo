@@ -1,6 +1,6 @@
 package com.example.pjbohp
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
@@ -10,6 +10,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
 
 class DetailActivity : AppCompatActivity() {
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -22,17 +23,26 @@ class DetailActivity : AppCompatActivity() {
         // Harga
         val dataHarga = intent.getStringExtra("harga")
         val harga: TextView = findViewById(R.id.tvHarga)
-        harga.text = dataHarga
+        harga.text = "Rp$dataHarga"
+
+        //  Desc
+        val dataDesc = intent.getStringExtra("desc")
+        val desc: TextView = findViewById(R.id.tvDesc)
+        desc.text = dataDesc
 
         // Poto
         val url = ApiBase().urlBase + "poto/"
         val dataImage = intent.getIntExtra("id", 1)
+        val potoo = intent.getStringExtra("poto")
         val poto: ImageView = findViewById(R.id.imageView)
-        println(url + dataImage)
-        Picasso.get().load(url + dataImage).into(poto)
+        if (potoo.equals("")){
+            poto.setImageResource(R.drawable.noimage)
+        } else {
+            Picasso.get().load(url + dataImage).into(poto)
+        }
 
-        // Back
+        // Back Button
         val back: FloatingActionButton = findViewById(R.id.backBtn)
-        back.setOnClickListener {startActivity(Intent(this, MainActivity::class.java))}
+        back.setOnClickListener { onBackPressed() }
     }
 }

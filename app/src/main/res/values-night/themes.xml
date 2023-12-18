@@ -16,12 +16,5 @@
         <item name="android:editTextColor">@color/black</item>
     </style>
 
-    <style name="Theme.Base" parent="Theme.PJBOHP"/>
-
-    <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/white</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/wa_icon</item>
-        <item name="postSplashScreenTheme">@style/Theme.Base</item>
-    </style>
 
 </resources>

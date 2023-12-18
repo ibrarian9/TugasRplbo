@@ -8,7 +8,7 @@ import retrofit2.http.GET
 
 class ApiBase {
 
-    private val url = "192.168.1.10:8080"
+    private val url = "192.168.153.206:8080"
     val urlBase = "http://$url/api/hape/"
 
     private fun getRetrofit() : Retrofit {

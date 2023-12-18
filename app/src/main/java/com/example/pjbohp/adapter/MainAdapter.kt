@@ -24,17 +24,25 @@ class MainAdapter (private var data: MutableList<ResponseItem>): RecyclerView.Ad
 
     override fun getItemCount(): Int = data.size
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, pos: Int) {
         val listData = data[pos]
+        val potoData = urlBase + listData.id
 
         holder.tvNama.text = listData.nama
-        holder.tvHarga.text = listData.harga
-        Picasso.get().load(urlBase + listData.id).into(holder.image)
+        holder.tvHarga.text = "Rp" + listData.harga
+        if (listData.foto.equals("")){
+            holder.image.setImageResource(R.drawable.noimage)
+        } else {
+            Picasso.get().load(potoData).into(holder.image)
+        }
         holder.itemView.setOnClickListener{ v ->
             val intent = Intent(v.context, DetailActivity::class.java)
             intent.putExtra("nama", listData.nama)
             intent.putExtra("harga", listData.harga)
             intent.putExtra("id", listData.id)
+            intent.putExtra("poto", listData.foto)
+            intent.putExtra("desc", listData.desc)
             v.context.startActivity(intent)
         }
     }
