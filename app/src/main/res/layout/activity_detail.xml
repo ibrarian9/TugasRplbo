@@ -132,7 +132,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/relativeLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/btnWa"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -159,7 +159,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout3"
+        android:id="@+id/btnWa"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="20dp"
